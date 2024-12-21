@@ -6,6 +6,7 @@ import (
 	"github.com/Dnreikronos/jwt-backend/configs"
 	"github.com/Dnreikronos/jwt-backend/db"
 	"github.com/joho/godotenv"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -24,4 +25,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	r := gin.Default()
+
+	r.Use(func(c *gin.Context) {
+		c.Set("db", db)
+		c.Next()
+	})
 }

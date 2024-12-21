@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 
+	"github.com/Dnreikronos/jwt-backend/configs"
 	"github.com/joho/godotenv"
 )
 
@@ -12,4 +14,8 @@ func main() {
 		panic(err)
 	}
 
+	err = configs.Load()
+	if err != nil {
+		panic(fmt.Sprintf("Failed to load configuration: %v", err))
+	}
 }

@@ -1,6 +1,9 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
 
 
 type User struct{
@@ -12,4 +15,9 @@ type User struct{
 type SignInInput struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
+}
+
+func (u *User) BeforeCreate(d *gorm.DB) (err error) {
+	u.ID = uuid.New()
+	return
 }

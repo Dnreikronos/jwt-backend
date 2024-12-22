@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/Dnreikronos/jwt-backend/configs"
-	"github.com/Dnreikronos/jwt-backend/db"
+	"github.com/Dnreikronos/jwt-backend/db/connection"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -22,7 +22,7 @@ func main() {
 		panic(fmt.Sprintf("Failed to load configuration: %v", err))
 	}
 
-	db, err := db.OpenConnection()
+	db, err := connection.OpenConnection()
 	if err != nil {
 		panic(err)
 	}

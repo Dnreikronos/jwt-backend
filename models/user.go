@@ -17,6 +17,13 @@ type SignInInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+func FilteredResponse(user User) UserResponse {
+	return UserResponse{
+		ID:    user.ID,
+		Email: user.Email,
+	}
+}
+
 func (u *User) BeforeCreate(d *gorm.DB) (err error) {
 	u.ID = uuid.New()
 	return

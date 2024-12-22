@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/Dnreikronos/jwt-backend/configs"
 	"github.com/Dnreikronos/jwt-backend/db"
-	"github.com/joho/godotenv"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -32,4 +33,6 @@ func main() {
 		c.Set("db", db)
 		c.Next()
 	})
+
+	http.ListenAndServe(fmt.Sprintf(":%s", configs.GetServerPort()), r)
 }

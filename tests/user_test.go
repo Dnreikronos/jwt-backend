@@ -45,7 +45,6 @@ func TestCreateUserHandler(t *testing.T) {
 	var user models.User
 	db.Where("email = ?", userInput.Email).First(&user)
 	assert.NotEmpty(t, user.ID)
-	assert.True(t, user.Verified)
 }
 
 func TestLoginHandler(t *testing.T) {

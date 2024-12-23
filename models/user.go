@@ -24,6 +24,11 @@ func FilteredResponse(user User) UserResponse {
 	}
 }
 
+type UserResponse struct {
+	ID    uuid.UUID `json:"id,omitempty"`
+	Email string    `json:"email,omitempty"`
+}
+
 func (u *User) BeforeCreate(d *gorm.DB) (err error) {
 	u.ID = uuid.New()
 	return

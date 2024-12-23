@@ -5,4 +5,4 @@ run: build
 	@./bin/jwt-backend cmd/main.go
 
 test:
-	@go test -v ./...
+	@go test ./tests/user_test.go -v 

@@ -10,6 +10,7 @@ type User struct {
 	Name     string    `json:"name"`
 	Email    string    `json:"email"`
 	Password string    `json:"password"`
+	Verified bool      `json:"verified"`
 }
 
 type SignInInput struct {
@@ -25,8 +26,9 @@ func FilteredResponse(user User) UserResponse {
 }
 
 type UserResponse struct {
-	ID    uuid.UUID `json:"id,omitempty"`
-	Email string    `json:"email,omitempty"`
+	ID       uuid.UUID `json:"id,omitempty"`
+	Email    string    `json:"email,omitempty"`
+	Verified bool      `json:"verified"`
 }
 
 func (u *User) BeforeCreate(d *gorm.DB) (err error) {

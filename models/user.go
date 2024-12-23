@@ -5,16 +5,30 @@ import (
 	"gorm.io/gorm"
 )
 
-
-type User struct{
-	ID        uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;"`
-	Name      string    `json:"name"`
-	Email     string    `json:"email"`
+type User struct {
+	ID       uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email"`
+	Password string    `json:"password"`
+	Verified bool      `json:"verified"`
 }
 
 type SignInInput struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
+}
+
+func FilteredResponse(user User) UserResponse {
+	return UserResponse{
+		ID:    user.ID,
+		Email: user.Email,
+	}
+}
+
+type UserResponse struct {
+	ID       uuid.UUID `json:"id,omitempty"`
+	Email    string    `json:"email,omitempty"`
+	Verified bool      `json:"verified"`
 }
 
 func (u *User) BeforeCreate(d *gorm.DB) (err error) {

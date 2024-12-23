@@ -6,6 +6,7 @@ import (
 
 	"github.com/Dnreikronos/jwt-backend/configs"
 	"github.com/Dnreikronos/jwt-backend/db/connection"
+	"github.com/Dnreikronos/jwt-backend/db/migration"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -26,6 +27,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	migration.RunMigrations(db)
 
 	r := gin.Default()
 

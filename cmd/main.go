@@ -7,6 +7,7 @@ import (
 	"github.com/Dnreikronos/jwt-backend/configs"
 	"github.com/Dnreikronos/jwt-backend/db/connection"
 	"github.com/Dnreikronos/jwt-backend/db/migration"
+	"github.com/Dnreikronos/jwt-backend/handlers"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -36,6 +37,13 @@ func main() {
 		c.Set("db", db)
 		c.Next()
 	})
+
+	r.POST("/register", handlers.CreateUserHandler)
+	r.POST("/login", handlers.LoginHandler)
+	authorized := r.Group("/", handlers.AuthMiddleware())
+	{
+		authorized.GET("/profile", handlers.ProfileHandler)
+	}
 
 	http.ListenAndServe(fmt.Sprintf(":%s", configs.GetServerPort()), r)
 }

@@ -3,11 +3,14 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/Dnreikronos/jwt-backend/configs"
 	"github.com/Dnreikronos/jwt-backend/db/connection"
 	"github.com/Dnreikronos/jwt-backend/db/migration"
 	"github.com/Dnreikronos/jwt-backend/handlers"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -37,6 +40,16 @@ func main() {
 		c.Set("db", db)
 		c.Next()
 	})
+
+	corsOrigin := os.Getenv("CORS")
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:  []string{corsOrigin},
+		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:  []string{"Origin", "Content-Type", "Accept"},
+		ExposeHeaders: []string{"Content-Length"},
+		MaxAge:        12 * time.Hour,
+	}))
 
 	r.POST("/register", handlers.CreateUserHandler)
 	r.POST("/login", handlers.LoginHandler)
